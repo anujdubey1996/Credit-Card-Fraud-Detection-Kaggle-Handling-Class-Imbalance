@@ -12,14 +12,27 @@ from tensorflow.python.keras.layers import CuDNNLSTM
 from tensorflow.keras.models import Sequential
 
 class Trainer():
-    def __init__(self, model, data):        
-        self.history = model.fit(
-            data.X_train,
-            data.y_train,
-            batch_size=config.BATCH_SIZE,
-            epochs=20,
-            validation_split=0.05, 
-            shuffle=True,
-            verbose=0
-        )
+    def __init__(self, model, data,class_weights = [], class_weight_flag = 0):
+        if class_weight_flag == 0:
+            self.history = model.fit(
+                data.X_train,
+                data.y_train,
+                batch_size=config.BATCH_SIZE,
+                epochs=20,
+                validation_split=0.05, 
+                shuffle=True,
+                verbose=0
+            )
+        else:
+            self.history = model.fit(
+                data.X_train,
+                data.y_train,
+                batch_size=config.BATCH_SIZE,
+                epochs=20,
+                validation_split=0.05, 
+                shuffle=True,
+                verbose=0,
+                class_weight = class_weights
+            )
+            
         
